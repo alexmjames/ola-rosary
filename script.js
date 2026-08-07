@@ -301,7 +301,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const installBtn = document.getElementById('btn-install-app');
   
   if (installBtn) {
-    installBtn.classList.remove('hidden');
+    // Check if the app is already running in standalone mode (installed)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    if (isStandalone) {
+      installBtn.classList.add('hidden');
+    } else {
+      installBtn.classList.remove('hidden');
+    }
   }
   
   window.addEventListener('beforeinstallprompt', (e) => {
