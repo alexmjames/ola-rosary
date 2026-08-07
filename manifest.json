@@ -1,0 +1,23 @@
+{
+  "name": "Our Lady of the Angels Daily Rosary",
+  "short_name": "OLA Rosary",
+  "description": "A digital guide for the daily rosary at Our Lady of the Angels.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#0f4c81",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Rosary - Our Lady of the Angels</title>
+  <meta name="theme-color" content="#f0f4f8">
+  <meta name="description" content="A digital guide for the daily rosary at Our Lady of the Angels.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <!-- Google Fonts: Inter (body) and Playfair Display (headings) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="background-gradient"></div>
+  <div class="background-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Glassmorphic FAB for Menu -->
+  <button id="menu-fab" aria-label="Open Navigation Menu" aria-expanded="false" aria-controls="nav-modal">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- Settings Gear Button -->
+  <button id="settings-fab" aria-label="Open Settings">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+  </button>
+
+  <!-- Navigation Modal -->
+  <div id="nav-modal" class="glass-modal hidden" aria-hidden="true">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h2 class="modal-title">Rosary Sections</h2>
+        <button id="close-modal" aria-label="Close Navigation Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <nav class="modal-nav">
+        <ul>
+          <li><a href="#opening-invocations" class="nav-link">Opening Invocations</a></li>
+          <li><a href="#novena-prayer" class="nav-link">Novena Prayer</a></li>
+          <li><a href="#the-creed" class="nav-link">The Creed</a></li>
+          <li><a href="#joyful-mysteries" class="nav-link">The Joyful Mysteries</a></li>
+          <li><a href="#sorrowful-mysteries" class="nav-link">The Sorrowful Mysteries</a></li>
+          <li><a href="#glorious-mysteries" class="nav-link">The Glorious Mysteries</a></li>
+          <li><a href="#luminous-mysteries" class="nav-link">The Luminous Mysteries</a></li>
+          <li><a href="#salve-regina" class="nav-link">Salve Regina</a></li>
+          <li><a href="#prayers-after-rosary" class="nav-link">Prayers After the Rosary</a></li>
+          <li><a href="#litany" class="nav-link">Litany of the B.V.M.</a></li>
+          <li><a href="#holy-souls" class="nav-link">Prayers for the Holy Souls</a></li>
+          <li><a href="#plenary-indulgence" class="nav-link">Plenary Indulgence</a></li>
+          <li><a href="#closing-invocations" class="nav-link">Closing Invocations</a></li>
+          <li><a href="#novena-st-joseph" class="nav-link">Novena to Saint Joseph</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="glass-modal hidden" aria-hidden="true">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h2 class="modal-title">Preferences</h2>
+        <button id="close-settings" aria-label="Close Settings Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-controls settings-group">
+        <div class="text-resizer">
+          <span class="control-label">Text Size:</span>
+          <button id="btn-text-decrease" aria-label="Decrease text size">A-</button>
+          <button id="btn-text-increase" aria-label="Increase text size">A+</button>
+        </div>
+      </div>
+      <div class="modal-controls settings-group" style="border-top: none;">
+        <div class="setting-toggle">
+          <span class="control-label">Interactive Beads:</span>
+          <label class="switch">
+            <input type="checkbox" id="toggle-interactive-beads">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-controls settings-group" style="border-top: none;">
+        <div class="setting-toggle">
+          <span class="control-label">Dark Theme:</span>
+          <label class="switch">
+            <input type="checkbox" id="toggle-theme">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-controls settings-group" style="border-top: none; justify-content: center; padding-bottom: 2rem;">
+        <button id="btn-install-app" class="install-btn hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Install App
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="reading-container">
+    <header class="app-header glass-card welcome-card">
+      <div class="welcome-subtitle">Our Lady of the Angels, Rouse Hill</div>
+      <h1 class="welcome-title">Daily Rosary</h1>
+      <div class="welcome-divider">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5;"><path d="M12 5v14"></path><path d="M7 9h10"></path></svg>
+      </div>
+    </header>
+
+    <div class="content-sections">
+      
+      <section id="opening-invocations" class="prayer-section glass-card">
+        <h2>Opening Invocations</h2>
+        <div class="inner-card">
+          <p class="versicle">Thou O Lord Open my lips...</p>
+          <p class="response">And my tongue shall announce thy praise..</p>
+          <p class="versicle">Incline unto my aid O God...</p>
+          <p class="response">O Lord make haste to help us.</p>
+          <p class="versicle">Glory be to the Father and to the Son and to the Holy Spirit...</p>
+          <p class="response">As it was in the Beginning, is now, and ever shall be, world without end. Amen.</p>
+        </div>
+      </section>
+
+      <section id="novena-prayer" class="prayer-section glass-card">
+        <h2>Our Lady of the Rosary Novena Prayer</h2>
+        <div class="inner-card">
+          <p>O Mary, Queen of the Holy Rosary, I thank you for your maternal protection, and for the many blessings I have received through your powerful intercession.</p>
+          <p>Blessed Mother you asked at Fatima for the daily recitation of the Rosary for peace in the world and in individual souls. I offer my Rosary as a spiritual "Bouquet of Roses" for the intentions of the Sacred Heart of Jesus, in atonement for the offenses committed against your Immaculate Heart, and in petition for the favors I ask in this Novena. With great confidence in your powerful intercession, I place these petitions in your hands and beseech you to present them to Jesus. He will never refuse what you ask of Him <em>(here make your requests)</em>.</p>
+        </div>
+        
+        <h3 class="subsection-title">Prayer to our Lady Help of Christians</h3>
+        <p class="subtitle-small">by Australians for the World</p>
+        <div class="inner-card">
+          <p>Lord, You place deep in our hearts the love of Mary, Help of Christians. Through her prayers grant wisdom to our leaders and integrity to our citizens. Under her protection may the world be granted harmony, justice and peace... faith, hope and charity.</p>
+          <p>O God, powerful and gentle, You love this world and all its peoples, old and new. As Christ's body and blood covers the whole earth so may His blood wash away the sins of the whole world. As Mary has participated so deeply in the passion so may she dispense of the merits of the passion to us all especially the most hardened sinners and vulnerable.</p>
+          <p>We ask this through Christ Our Lord, Amen.</p>
+        </div>
+      </section>
+
+      <section id="the-creed" class="prayer-section glass-card">
+        <h2>The Creed</h2>
+        <div class="inner-card">
+          <p>
+            I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father almighty; from there he will come to judge the living and the dead.
+          </p>
+          <p>
+            I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.
+          </p>
+        </div>
+        
+        <div class="inner-card">
+          <p class="versicle">
+            Our Father, who art in heaven, hallowed be thy name; thy kingdom come, thy will be done on earth as it is in heaven.
+          </p>
+          <p class="response">
+            Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.
+          </p>
+        </div>
+        
+        <div class="inner-card" id="three-hail-marys-card">
+          <p class="versicle">
+            Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus.
+          </p>
+          <p class="response">
+            Holy Mary, mother of God, pray for us sinners now and at the hour of our death. Amen.
+          </p>
+        </div>
+        
+        <div class="inner-card">
+          <p class="versicle">
+            Glory be to the Father and to the Son and to the Holy Spirit...
+          </p>
+          <p class="response">
+            As it was in the Beginning, is now, and ever shall be, world without end. Amen.
+          </p>
+        </div>
+        
+        <div class="highlight-box">
+          <h3>After each Glory Be to The Trinity...</h3>
+          <p class="versicle">
+            O my Jesus, forgive us our sins, save us from the fires of Hell, lead all souls to heaven especially those who most need Thy mercy...
+          </p>
+          <p class="response">
+            <strong>R.</strong> Have mercy on the poor, the sick, the dying and the afflicted and the suffering souls in purgatory.
+          </p>
+        </div>
+      </section>
+
+      <!-- Dynamic Jump to Today's Mystery -->
+      <div class="jump-action" style="margin-bottom: 2.5rem; justify-content: flex-start;">
+        <a href="#joyful-mysteries" id="dynamic-mystery-link" class="jump-btn" style="background: var(--color-accent); color: white;">
+          Go to Today's Mystery <span class="arrow" style="transform: rotate(90deg); margin-left: 0.5rem;">→</span>
+        </a>
+      </div>
+
+      <!-- Mysteries start here with data-days attribute -->
+      <section id="joyful-mysteries" class="prayer-section glass-card mystery-section" data-days="1,6">
+        <div class="mystery-header">
+          <h2>The Joyful Mysteries <span class="day-hint">(Mon, Sat)</span></h2>
+          <span class="today-badge hidden">Today's Mystery</span>
+        </div>
+        
+        <div class="mystery-item inner-card">
+          <h3>First Joyful Mystery: The Annunciation</h3>
+          <p class="intention">I Desire the Love Of Humility</p>
+          <p><strong>Think of...</strong><br>
+          The humility of the Blessed Virgin when the Angel Gabriel greeted her with these words: "Hail full of grace". The Angel Gabriel appears to Mary, announcing she is to be the Mother of God.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Second Joyful Mystery: The Visitation</h3>
+          <p class="intention">I Desire Charity Toward My Neighbour</p>
+          <p><strong>Think of...</strong><br>
+          Mary's charity in visiting her cousin Elizabeth and remaining with her for three months before the birth of John the Baptist.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Third Joyful Mystery: The Birth of Jesus</h3>
+          <p class="intention">I Desire the love of God</p>
+          <p><strong>Think of...</strong><br>
+          The poverty, so lovingly accepted by Mary when she placed the Infant Jesus, our God and Redeemer, in a manger in the stable of Bethlehem.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fourth Joyful Mystery: The Presentation in the Temple</h3>
+          <p class="intention">I Desire a Spirit of Sacrifice</p>
+          <p><strong>Think of...</strong><br>
+          Mary's obedience to the law of God in presenting the Child Jesus in the Temple.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fifth Joyful Mystery: Finding in the Temple</h3>
+          <p class="intention">I desire Zeal For The Glory Of God</p>
+          <p><strong>Think of...</strong><br>
+          The deep sorrow with which Mary sought the Child Jesus for three days, and the joy with which she found Him in the midst of the Teachers of the Temple.</p>
+        </div>
+        
+        <div class="jump-action">
+          <a href="#salve-regina" class="jump-btn">Proceed to Salve Regina <span class="arrow">→</span></a>
+        </div>
+      </section>
+
+      <section id="sorrowful-mysteries" class="prayer-section glass-card mystery-section" data-days="2,5">
+        <div class="mystery-header">
+          <h2>The Sorrowful Mysteries <span class="day-hint">(Tue, Fri)</span></h2>
+          <span class="today-badge hidden">Today's Mystery</span>
+        </div>
+        
+        <div class="mystery-item inner-card">
+          <h3>First Sorrowful Mystery: The Agony in the Garden</h3>
+          <p class="intention">I Desire True Repentance for My Sins</p>
+          <p><strong>Think of...</strong><br>
+          Our Lord Jesus in the garden of Gethsemane, suffering a bitter agony for our sins.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Second Sorrowful Mystery: The Scourging at the Pillar</h3>
+          <p class="intention">I Desire a Spirit of Mortification</p>
+          <p><strong>Think of...</strong><br>
+          The cruel scourging at the pillar that our Lord suffered; the heavy blows that tore His flesh.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Third Sorrowful Mystery: The Crowning with Thorns</h3>
+          <p class="intention">I Desire Moral Courage.</p>
+          <p><strong>Think of...</strong><br>
+          The crown of sharp thorns that was forced upon our Lord's Sacred Head and the patience with which He endured the pain for our sins.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fourth Sorrowful Mystery: The Carrying of the Cross</h3>
+          <p class="intention">I Desire the Virtue of Patience</p>
+          <p><strong>Think of...</strong><br>
+          The heavy Cross, so willingly carried by our Lord, and ask Him to help you to carry your crosses without complaint.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fifth Sorrowful Mystery: The Crucifixion</h3>
+          <p class="intention">I Desire the Grace of Final Perseverance</p>
+          <p><strong>Think of...</strong><br>
+          The love which filled Christ's Sacred Heart during His three hours' agony on the Cross, and ask Him to be with you at the hour of death.</p>
+        </div>
+
+        <div class="jump-action">
+          <a href="#salve-regina" class="jump-btn">Proceed to Salve Regina <span class="arrow">→</span></a>
+        </div>
+      </section>
+
+      <section id="glorious-mysteries" class="prayer-section glass-card mystery-section" data-days="0,3">
+        <div class="mystery-header">
+          <h2>The Glorious Mysteries <span class="day-hint">(Wed, Sun)</span></h2>
+          <span class="today-badge hidden">Today's Mystery</span>
+        </div>
+        
+        <div class="mystery-item inner-card">
+          <h3>First Glorious Mystery: The Resurrection</h3>
+          <p class="intention">I Desire a Strong Faith</p>
+          <p><strong>Think of...</strong><br>
+          Christ's glorious triumph when, on the third day after His death, He arose from the tomb and for forty days appeared to His Blessed Mother and to His disciples.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Second Glorious Mystery: The Ascension</h3>
+          <p class="intention">I Desire the Virtue of Hope</p>
+          <p><strong>Think of...</strong><br>
+          The Ascension of Jesus Christ, forty days after His glorious Resurrection, in the presence of Mary and his disciples.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Third Glorious Mystery: The Descent of the Holy Spirit</h3>
+          <p class="intention">I Desire Zeal for the Glory of God</p>
+          <p><strong>Think of...</strong><br>
+          The descent of the Holy Spirit upon Mary and the Apostles, under the form of tongues of fire, in fulfilment of Christ's promise.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fourth Glorious Mystery: The Assumption</h3>
+          <p class="intention">I Desire the Grace of a Holy Death</p>
+          <p><strong>Think of...</strong><br>
+          The glorious Assumption of Mary into Heaven, when she was united with her Divine Son.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fifth Glorious Mystery: The Coronation</h3>
+          <p class="intention">I Desire a Greater Love for the Blessed Virgin Mary</p>
+          <p><strong>Think of...</strong><br>
+          The glorious crowning of Mary as Queen of Heaven and Earth by her Divine Son, to the great joy of all the Angles and Saints.</p>
+        </div>
+
+        <div class="jump-action">
+          <a href="#salve-regina" class="jump-btn">Proceed to Salve Regina <span class="arrow">→</span></a>
+        </div>
+      </section>
+
+      <section id="luminous-mysteries" class="prayer-section glass-card mystery-section" data-days="4">
+        <div class="mystery-header">
+          <h2>The Luminous Mysteries <span class="day-hint">(Thursday)</span></h2>
+          <span class="today-badge hidden">Today's Mystery</span>
+        </div>
+        
+        <div class="mystery-item inner-card">
+          <h3>First Luminous Mystery: The Baptism of Jesus</h3>
+          <p class="intention">I desire Gratitude for the Gift of Faith.</p>
+          <p><strong>Think of...</strong><br>
+          Christ descends into the waters, the innocent one who became "sin" for our sake, the heavens open wide and the voice of the Father declares him the beloved Son, while the Spirit descends on him to invest him with the mission which he is to carry out.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Second Luminous Mystery: The Wedding at Cana</h3>
+          <p class="intention">I desire to come to Jesus through Mary.</p>
+          <p><strong>Think of...</strong><br>
+          The first of the signs, given at Cana, when Christ changes water into wine and manifests his glory and opens the hearts of the disciples to faith, thanks to the intervention of Mary, the first among believers.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Third Luminous Mystery: Proclamation of the Kingdom of God</h3>
+          <p class="intention">I desire holiness</p>
+          <p><strong>Think of...</strong><br>
+          The preaching by which Jesus proclaims the coming of the Kingdom of God, calls to conversion and forgives the sins of all who draw near to him in humble trust.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fourth Luminous Mystery: The Transfiguration of Jesus</h3>
+          <p class="intention">I desire the grace of spiritual courage</p>
+          <p><strong>Think of...</strong><br>
+          The glory of the Godhead shines forth from the face of Christ as the Father commands the astonished Apostles to "listen to him and to prepare to experience with him the agony of the Passion, so as to come with him to the joy of the Resurrection.</p>
+        </div>
+
+        <div class="mystery-item inner-card">
+          <h3>Fifth Luminous Mystery: The Institution of the Eucharist</h3>
+          <p class="intention">I desire the grace of love of our Lord in the Eucharist.</p>
+          <p><strong>Think of...</strong><br>
+          Christ offers his body and blood as food under the form of bread and wine, and testifies "to the end" his love for humanity, for whose salvation he will offer himself in sacrifice.</p>
+        </div>
+
+        <div class="jump-action">
+          <a href="#salve-regina" class="jump-btn">Proceed to Salve Regina <span class="arrow">→</span></a>
+        </div>
+      </section>
+      <!-- End of Mysteries -->
+
+      <section id="salve-regina" class="prayer-section glass-card">
+        <h2>Salve Regina</h2>
+        <div class="inner-card">
+          <p>
+            Hail, holy Queen, mother of mercy,<br>
+            our life, our sweetness, and our hope.<br>
+            To you do we cry, poor banished children of Eve.<br>
+            To you do we send up our sighs<br>
+            mourning and weeping in this valley of tears.<br>
+            Turn, then, most gracious Advocate,<br>
+            your eyes of mercy towards us;<br>
+            and after this exile<br>
+            show us the blessed fruit of your womb, Jesus.<br>
+            O clement, O loving, O sweet Virgin Mary.
+          </p>
+          
+          <div class="versicle-response">
+            <p class="versicle"><strong>V.</strong> Pray for us, O Holy Mother of God.</p>
+            <p class="response"><strong>R.</strong> That we may be made worthy of the promises of Christ.</p>
+          </div>
+        </div>
+        
+        <h3 class="subsection-title">Let us pray</h3>
+        <div class="inner-card">
+          <p>O God Whose Only Begotten Son, by His Life Death and Resurrection, has purchased for us the rewards of Eternal Life, grant we beseech thee that while meditating upon these mysteries of the Most Holy Rosary of the Blessed Virgin Mary, that we may imitate what they contain and obtain what they promise through Christ Our Lord, Amen.</p>
+          
+          <div class="versicle-response">
+            <p class="versicle"><strong>V.</strong> May the Divine assistance remain always with us.</p>
+            <p class="response"><strong>R.</strong> May the souls of the faithful departed, through the mercy of God rest in peace. Amen.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="prayers-after-rosary" class="prayer-section glass-card">
+        <h2>Prayers after the Rosary</h2>
+        
+        <h3 class="subsection-title">The Memorare</h3>
+        <div class="inner-card">
+          <p>Remember, O most gracious Virgin Mary, that never was it known that any one who fled to Thy Protection, implored Thy Help or sought Thy Intercession, was left unaided. Inspired with this confidence, I fly unto Thee, O Virgin of Virgins my Mother, to Thee do I come, before Thee I stand, sinful and sorrowful; O Mother of the Word Incarnate, despise not my petitions, but in Thy Mercy hear and answer me. Amen.</p>
+        </div>
+
+        <h3 class="subsection-title">Prayer to Our Lady Queen of Angels</h3>
+        <div class="inner-card">
+          <p>August Queen of Heaven, Sovereign Mistress of the Angels, Thou Who from the beginning has received from God the power and mission to crush the head of Satan, we humbly beseech Thee to send Thy Holy Angels that, under Thy command and by Thy power, they may pursue the evil spirits, encounter them on every side, resist their bold attacks and drive them hence into the abyss of eternal woe.</p>
+          <p>Who is Like Unto God! O Good and Tender Mother Thou shalt ever be our love and our hope. Holy Angels and Archangels, keep us and defend us. Amen.</p>
+        </div>
+
+        <h3 class="subsection-title">Prayer to Saint Michael Prince of Angels</h3>
+        <div class="inner-card">
+          <p>Saint Michael the Archangel, defend us in the hour of battle, be our safeguard against the wickedness and snares of the Devil. May God rebuke him, we humbly pray, and do Thou O Prince of the heavenly host, by the power of God, cast into hell Satan and the other evil spirits who prowl about the world seeking the ruin of souls. Amen.</p>
+        </div>
+      </section>
+
+      <section id="litany" class="prayer-section glass-card">
+        <h2>Litany of the Blessed Virgin Mary</h2>
+        <div class="inner-card">
+          <p>We fly to thy Patronage O Holy Mother of God, despise not our prayers in our necessities, but deliver us from all dangers O Ever Glorious and Blessed Mary, Ever Virgin.</p>
+        </div>
+        
+        <div class="inner-card litany-container">
+          <div class="litany-grid">
+            <p class="versicle">Lord, have mercy on us.</p>
+            <p class="response">Lord, have mercy on us.</p>
+
+            <p class="versicle">Christ, have mercy on us.</p>
+            <p class="response">Christ, have mercy on us.</p>
+
+            <p class="versicle">Lord, have mercy on us. Christ, hear us.</p>
+            <p class="response">Christ, graciously hear us.</p>
+            
+            <p class="versicle">God the Father of Heaven,</p><p class="response">Have mercy on us.</p>
+            <p class="versicle">God the Son, Redeemer of the world,</p><p class="response">Have mercy on us.</p>
+            <p class="versicle">God the Holy Spirit,</p><p class="response">Have mercy on us.</p>
+            <p class="versicle">Holy Trinity, one God,</p><p class="response">Have mercy on us.</p>
+          </div>
+
+          <div class="litany-grid litany-main">
+            <p class="versicle">Holy Mary,</p><p class="response">pray for us.</p>
+            <p class="versicle">Holy Mother of God,</p><p class="response">pray for us.</p>
+            <p class="versicle">Holy Virgin of virgins,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of Christ,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of the Church,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of mercy,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of divine grace,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of hope,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother most pure,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother most chaste,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother inviolate,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother undefiled,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother most amiable,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother most admirable,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of good counsel,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of our Creator,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mother of our Saviour,</p><p class="response">pray for us.</p>
+            <p class="versicle">Virgin most prudent,</p><p class="response">pray for us.</p>
+            <p class="versicle">Virgin most venerable,</p><p class="response">pray for us.</p>
+            <p class="versicle">Virgin most renowned,</p><p class="response">pray for us.</p>
+            <p class="versicle">Virgin most powerful,</p><p class="response">pray for us.</p>
+            <p class="versicle">Virgin most merciful,</p><p class="response">pray for us.</p>
+            <p class="versicle">Virgin most faithful,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mirror of justice,</p><p class="response">pray for us.</p>
+            <p class="versicle">Seat of wisdom,</p><p class="response">pray for us.</p>
+            <p class="versicle">Cause of our joy,</p><p class="response">pray for us.</p>
+            <p class="versicle">Spiritual vessel,</p><p class="response">pray for us.</p>
+            <p class="versicle">Vessel of honour,</p><p class="response">pray for us.</p>
+            <p class="versicle">Singular vessel of devotion,</p><p class="response">pray for us.</p>
+            <p class="versicle">Mystical rose,</p><p class="response">pray for us.</p>
+            <p class="versicle">Tower of David,</p><p class="response">pray for us.</p>
+            <p class="versicle">Tower of ivory,</p><p class="response">pray for us.</p>
+            <p class="versicle">House of gold,</p><p class="response">pray for us.</p>
+            <p class="versicle">Ark of the covenant,</p><p class="response">pray for us.</p>
+            <p class="versicle">Gate of heaven,</p><p class="response">pray for us.</p>
+            <p class="versicle">Morning star,</p><p class="response">pray for us.</p>
+            <p class="versicle">Health of the sick,</p><p class="response">pray for us.</p>
+            <p class="versicle">Refuge of sinners,</p><p class="response">pray for us.</p>
+            <p class="versicle">Solace of migrants,</p><p class="response">pray for us.</p>
+            <p class="versicle">Comfort of the afflicted,</p><p class="response">pray for us.</p>
+            <p class="versicle">Help of Christians,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of Angels,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of Patriarchs,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of Prophets,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of Apostles,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of Martyrs,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of Confessors,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of Virgins,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of all Saints,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen conceived without original sin,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen assumed into heaven,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of the most holy Rosary,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of families,</p><p class="response">pray for us.</p>
+            <p class="versicle">Queen of peace,</p><p class="response">pray for us.</p>
+          </div>
+
+          <div class="litany-grid litany-agnus">
+            <p class="versicle">Lamb of God, who takes away the sins of the world.</p>
+            <p class="response">Spare us, O Lord.</p>
+            <p class="versicle">Lamb of God, who takes away the sins of the world.</p>
+            <p class="response">Graciously hear us, O Lord.</p>
+            <p class="versicle">Lamb of God, who takes away the sins of the world.</p>
+            <p class="response">Have mercy on us.</p>
+          </div>
+
+          <div class="versicle-response" style="margin-top: 1.5rem;">
+            <p class="versicle"><strong>V.</strong> Pray for us, O Holy Mother of God.</p>
+            <p class="response"><strong>R.</strong> That we may be made worthy of the promises of Christ.</p>
+          </div>
+        </div>
+        
+        <h3 class="subsection-title">Let us pray</h3>
+        <div class="inner-card">
+          <p>Grant, we beseech Thee, O Lord God, that we Thy Servants may enjoy perpetual health of mind and body and by the Glorious Intercession of the Blessed Mary, ever Virgin, be delivered from present sorrow and enjoy eternal happiness. Through Christ Our Lord. Amen.</p>
+        </div>
+      </section>
+
+      <section id="holy-souls" class="prayer-section glass-card">
+        <h2>Prayers for the Holy Souls by Saint Gertrude the Great</h2>
+        <div class="inner-card">
+          <p>Eternal Father, I offer You the most precious blood of Thy Divine Son, Jesus, in union with the Masses said throughout the world today, for all the Holy Souls in Purgatory, for sinners everywhere, for sinners in the universal church, for those in my own home and in my family. Amen.</p>
+        </div>
+      </section>
+
+      <section id="plenary-indulgence" class="prayer-section glass-card">
+        <h2>Prayer for a Plenary Indulgence</h2>
+        
+        <h3 class="subsection-title">Prayer for the Holy Father's Intentions:</h3>
+        <div class="inner-card">
+          <p>Let us pray that in large cities often marked by anonymity and loneliness we find new ways to proclaim the Gospel, discovering creative paths to build community.</p>
+          <div class="prayer-beads">
+            <p class="response" style="text-align: center;">Our Father... / Hail Mary... / Glory Be...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="closing-invocations" class="prayer-section glass-card">
+        <h2>Closing Invocations</h2>
+        <div class="inner-card">
+          <div class="closing-list">
+            <p class="versicle">Our Lady of the Angels</p>
+            <p class="versicle">Saint Joseph</p>
+            <p class="versicle">Saint Dominic</p>
+            <p class="versicle">Saint Mary of the Cross</p>
+            <p class="versicle">Saint Francis of Assisi</p>
+            <p class="versicle">Saint Anthony of Padua</p>
+            <p class="versicle">Saint Thérèse of Lisieux</p>
+            <p class="versicle">Saint Faustina Kowalska</p>
+            <p class="versicle">Saint Padre Pio</p>
+            <p class="versicle">Saint John Paul II</p>
+            <p class="versicle">Saint Carlo Acutis</p>
+            <p class="versicle"><em>*Saint of the day, if any*</em></p>
+            <p class="versicle">All the Angels and Saints</p>
+          </div>
+          <p class="pray-for-us response"><strong>Pray for us.</strong></p>
+        </div>
+      </section>
+      
+      <section id="novena-st-joseph" class="prayer-section glass-card">
+        <h2>Novena to Saint Joseph</h2>
+        <div class="inner-card">
+          <p>Glorious Saint Joseph, foster father and protector of Our Lord Jesus. To you do I raise my heart and hands to ask for your powerful intercession. Please obtain for me, from the kind Heart of Jesus, the grace and help I need, for my spiritual life and my earthly journey. I also humbly ask for the grace of a happy death, and for the special favour I now implore, (mention your request). Guardian of the Word Incarnate, I am so hopeful and confident that your prayers on my behalf will be graciously heard before the throne of God. Dearest Saint Joseph, through the love you bear for Our Lord Jesus, and for the Glory of His Name, please hear my prayer and obtain my petition. Amen.</p>
+        </div>
+        
+        <p class="sign-of-cross">In the name of the Father, and of the Son, and of the Holy Spirit. Amen.</p>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
