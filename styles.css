@@ -932,3 +932,7 @@ body.dark-theme .bead-btn {
   border: 1px solid transparent;
   transform: scale(1.1);
 }
+body.dark-theme .bead-btn.filled {
+  background: radial-gradient(circle at 30% 30%, #fff 0%, var(--color-accent) 60%, rgba(255,255,255,0.4) 100%);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(0,0,0,0.5);
+}

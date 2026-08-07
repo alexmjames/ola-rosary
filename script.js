@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entry.target.classList.add('reveal-visible');
       }
     });
-  }, { threshold: 0.1, rootMargin: "0px 0px -10% 0px" });
+  }, { threshold: 0.01, rootMargin: "0px 0px -10% 0px" });
 
   prayerSections.forEach(section => sectionObserver.observe(section));
 
@@ -300,23 +300,31 @@ document.addEventListener('DOMContentLoaded', () => {
   let deferredPrompt;
   const installBtn = document.getElementById('btn-install-app');
   
+  if (installBtn) {
+    installBtn.classList.remove('hidden');
+  }
+  
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.classList.remove('hidden');
   });
 
-  installBtn.addEventListener('click', async () => {
-    triggerHaptic(20);
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        installBtn.classList.add('hidden');
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      triggerHaptic(20);
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtn.textContent = 'Installed';
+          installBtn.disabled = true;
+        }
+        deferredPrompt = null;
+      } else {
+        alert("This app is either already installed, or your browser does not support installation right now. Try using 'Add to Home Screen' from your browser menu.");
       }
-      deferredPrompt = null;
-    }
-  });
+    });
+  }
 
   // === 10. Service Worker Registration ===
   if ('serviceWorker' in navigator) {
