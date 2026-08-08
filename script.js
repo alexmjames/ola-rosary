@@ -169,12 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
       showMeditations = e.target.checked;
       localStorage.setItem('showMeditations', showMeditations);
       
-      // Hide all popups if turned off
+      // Hide popup if turned off
       if (!showMeditations) {
-        document.querySelectorAll('.meditation-popup').forEach(p => {
-          p.classList.remove('visible');
-          p.textContent = '';
-        });
+        const popup = document.getElementById('global-meditation-popup');
+        if (popup) {
+          popup.classList.remove('visible');
+          popup.textContent = '';
+        }
       }
     });
   }
@@ -194,32 +195,45 @@ document.addEventListener('DOMContentLoaded', () => {
       const beadIdx = bead.getAttribute('data-bead-index');
       
       if (type && mysteryIdx !== null && beadIdx !== null) {
-        // Find the closest popup within the same mystery-item
-        const container = bead.closest('.mystery-item');
-        if (container) {
-          const popup = container.querySelector('.meditation-popup');
-          if (popup) {
-            if (isFilled) {
-              const text = MEDITATIONS[type][mysteryIdx][beadIdx];
-              if (text) {
-                popup.textContent = text;
-                popup.classList.add('visible');
-              }
-            } else {
-              // Check if any beads in this container are still filled
+        const popup = document.getElementById('global-meditation-popup');
+        if (popup) {
+          if (isFilled) {
+            const text = MEDITATIONS[type][mysteryIdx][beadIdx];
+            if (text) {
+              popup.textContent = text;
+              popup.classList.add('visible');
+              
+              // Position popup above the bead
+              const rect = bead.getBoundingClientRect();
+              popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 15) + 'px';
+              popup.style.left = (rect.left + rect.width / 2) + 'px';
+            }
+          } else {
+            // Find if any beads in this group are still filled
+            const container = bead.closest('.mystery-item');
+            if (container) {
               const filledBeads = container.querySelectorAll('.bead-btn.filled');
               if (filledBeads.length === 0) {
                 popup.classList.remove('visible');
               } else {
-                // Find the most recently filled (highest index) bead
                 let lastFilledText = '';
+                let lastFilledBead = null;
                 container.querySelectorAll('.bead-btn').forEach(b => {
                   if (b.classList.contains('filled')) {
                     const bIdx = b.getAttribute('data-bead-index');
                     lastFilledText = MEDITATIONS[type][mysteryIdx][bIdx];
+                    lastFilledBead = b;
                   }
                 });
+                
                 popup.textContent = lastFilledText;
+                
+                // Reposition to the new active bead
+                if (lastFilledBead) {
+                  const rect = lastFilledBead.getBoundingClientRect();
+                  popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 15) + 'px';
+                  popup.style.left = (rect.left + rect.width / 2) + 'px';
+                }
               }
             }
           }
@@ -259,11 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const items = section.querySelectorAll('.mystery-item');
     items.forEach((item, mysteryIndex) => {
-      // Create meditation popup
-      const popup = document.createElement('div');
-      popup.className = 'meditation-popup glass-card';
-      item.insertBefore(popup, item.querySelector('p')); // Insert above the first paragraph
-
       const container = document.createElement('div');
       container.className = 'interactive-beads-container';
       
@@ -422,4 +431,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error('Service Worker registration failed:', err));
     });
   }
+  // Hide popup on resize or scroll because layout shifts will detach it from the bead
+  const hidePopup = () => {
+    const popup = document.getElementById('global-meditation-popup');
+    if (popup && popup.classList.contains('visible')) {
+      popup.classList.remove('visible');
+    }
+  };
+  window.addEventListener('resize', hidePopup, { passive: true });
+  window.addEventListener('scroll', hidePopup, { passive: true });
 });
