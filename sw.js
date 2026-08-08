@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ola-rosary-cache-v1';
+const CACHE_NAME = 'ola-rosary-cache-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Force activate immediately
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -18,19 +19,33 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Network First, falling back to cache strategy
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+    fetch(event.request)
+      .then(networkResponse => {
+        // Only cache successful GET requests
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic' || event.request.method !== 'GET') {
+          return networkResponse;
         }
-        return fetch(event.request);
+        
+        // Clone the response so we can put it in the cache and return it
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME)
+          .then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+          
+        return networkResponse;
+      })
+      .catch(() => {
+        // If network fails, fall back to cache
+        return caches.match(event.request);
       })
   );
 });
 
 self.addEventListener('activate', event => {
+  event.waitUntil(clients.claim()); // Take control of all open pages immediately
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
