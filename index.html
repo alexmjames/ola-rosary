@@ -100,12 +100,18 @@
         </div>
       </div>
       <div class="modal-controls settings-group" style="border-top: none;">
-        <div class="setting-toggle">
-          <span class="control-label">Show Meditations:</span>
-          <label class="switch">
-            <input type="checkbox" id="toggle-meditations">
-            <span class="slider round"></span>
-          </label>
+        <div class="setting-toggle" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+          <span class="control-label" style="margin-bottom: 0.5rem; display: block; font-weight: 500;">Meditation Style:</span>
+          <div class="segmented-control">
+            <input type="radio" name="meditation-style" id="style-off" value="off">
+            <label for="style-off">Off</label>
+            
+            <input type="radio" name="meditation-style" id="style-spiritual" value="spiritual" checked>
+            <label for="style-spiritual">Spiritual</label>
+            
+            <input type="radio" name="meditation-style" id="style-scriptural" value="scriptural">
+            <label for="style-scriptural">Scriptural</label>
+          </div>
         </div>
       </div>
       <div class="modal-controls settings-group" style="border-top: none;">
@@ -612,6 +618,13 @@
       </section>
     </div>
   </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p>Meditation content gracefully provided by <a href="https://www.rosarycenter.org/pwa" target="_blank" rel="noopener">rosarycenter.org</a></p>
+      <p>Designed and developed by the <strong>OLA Rosarian Team</strong></p>
+    </div>
+  </footer>
 
   <div id="global-meditation-popup"></div>
 

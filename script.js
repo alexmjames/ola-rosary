@@ -157,26 +157,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // === 6.1 Show Meditations Logic ===
-  const toggleMeditations = document.getElementById('toggle-meditations');
-  let showMeditations = true;
-  if (toggleMeditations) {
-    const savedMeditationsState = localStorage.getItem('showMeditations');
-    showMeditations = savedMeditationsState === null ? true : savedMeditationsState === 'true';
-    toggleMeditations.checked = showMeditations;
+  const meditationRadios = document.querySelectorAll('input[name="meditation-style"]');
+  let meditationStyle = 'spiritual'; // Default to spiritual
+  
+  if (meditationRadios.length > 0) {
+    const savedStyle = localStorage.getItem('meditationStyle');
+    if (savedStyle) {
+      meditationStyle = savedStyle;
+    }
     
-    toggleMeditations.addEventListener('change', (e) => {
-      triggerHaptic(15);
-      showMeditations = e.target.checked;
-      localStorage.setItem('showMeditations', showMeditations);
-      
-      // Hide popup if turned off
-      if (!showMeditations) {
-        const popup = document.getElementById('global-meditation-popup');
-        if (popup) {
-          popup.classList.remove('visible');
-          popup.textContent = '';
+    // Initialize radio button state
+    document.querySelector(`input[name="meditation-style"][value="${meditationStyle}"]`).checked = true;
+    
+    meditationRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        triggerHaptic(15);
+        meditationStyle = e.target.value;
+        localStorage.setItem('meditationStyle', meditationStyle);
+        
+        // Hide popup if turned off
+        if (meditationStyle === 'off') {
+          const popup = document.getElementById('global-meditation-popup');
+          if (popup) {
+            popup.classList.remove('visible');
+            popup.textContent = '';
+          }
+        } else {
+          // If a style is selected, update the popup if it's currently visible
+          const popup = document.getElementById('global-meditation-popup');
+          if (popup && popup.classList.contains('visible')) {
+            const activeBead = popup.parentElement;
+            if (activeBead && activeBead.classList.contains('bead-btn')) {
+              // Re-trigger click logic to refresh text
+              const type = activeBead.getAttribute('data-mystery-type');
+              const mysteryIdx = activeBead.getAttribute('data-mystery-index');
+              const beadIdx = activeBead.getAttribute('data-bead-index');
+              const dataset = meditationStyle === 'scriptural' ? (typeof SCRIPTURE_THOUGHTS !== 'undefined' ? SCRIPTURE_THOUGHTS : MEDITATIONS) : MEDITATIONS;
+              popup.textContent = dataset[type][mysteryIdx][beadIdx];
+            }
+          }
         }
-      }
+      });
     });
   }
 
@@ -189,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
       triggerHaptic(5);
     }
     
-    if (showMeditations && typeof MEDITATIONS !== 'undefined') {
+    if (meditationStyle !== 'off' && typeof MEDITATIONS !== 'undefined') {
       const type = bead.getAttribute('data-mystery-type');
       const mysteryIdx = bead.getAttribute('data-mystery-index');
       const beadIdx = bead.getAttribute('data-bead-index');
@@ -197,8 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (type && mysteryIdx !== null && beadIdx !== null) {
         const popup = document.getElementById('global-meditation-popup');
         if (popup) {
+          const dataset = meditationStyle === 'scriptural' ? (typeof SCRIPTURE_THOUGHTS !== 'undefined' ? SCRIPTURE_THOUGHTS : MEDITATIONS) : MEDITATIONS;
           if (isFilled) {
-            const text = MEDITATIONS[type][mysteryIdx][beadIdx];
+            const text = dataset[type][mysteryIdx][beadIdx];
             if (text) {
               popup.textContent = text;
               popup.style.top = ''; // Clear old inline styles
@@ -223,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 container.querySelectorAll('.bead-btn').forEach(b => {
                   if (b.classList.contains('filled')) {
                     const bIdx = b.getAttribute('data-bead-index');
-                    lastFilledText = MEDITATIONS[type][mysteryIdx][bIdx];
+                    lastFilledText = dataset[type][mysteryIdx][bIdx];
                     lastFilledBead = b;
                   }
                 });

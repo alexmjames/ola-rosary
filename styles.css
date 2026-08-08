@@ -997,3 +997,69 @@ body.dark-theme #global-meditation-popup {
 body.dark-theme #global-meditation-popup::after {
   border-color: rgba(15, 76, 129, 0.9) transparent transparent transparent;
 }
+
+/* Segmented Control for Settings */
+.segmented-control {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 4px;
+  width: 100%;
+}
+body.dark-theme .segmented-control {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.segmented-control input[type="radio"] {
+  display: none;
+}
+.segmented-control label {
+  flex: 1;
+  text-align: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+.segmented-control input[type="radio"]:checked + label {
+  background-color: #fff;
+  color: var(--color-primary);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  opacity: 1;
+}
+body.dark-theme .segmented-control input[type="radio"]:checked + label {
+  background-color: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Footer Attribution */
+.app-footer {
+  margin-top: 3rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+body.dark-theme .app-footer {
+  color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.app-footer p {
+  margin-bottom: 0.5rem;
+}
+.app-footer a {
+  color: inherit;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.app-footer a:hover {
+  color: var(--color-primary);
+}
+body.dark-theme .app-footer a:hover {
+  color: var(--color-accent);
+}
