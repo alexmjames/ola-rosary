@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
               
               // Position popup above the bead
               const rect = bead.getBoundingClientRect();
-              popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 15) + 'px';
+              popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 20) + 'px';
               popup.style.left = (rect.left + rect.width / 2) + 'px';
             }
           } else {
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Reposition to the new active bead
                 if (lastFilledBead) {
                   const rect = lastFilledBead.getBoundingClientRect();
-                  popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 15) + 'px';
+                  popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 20) + 'px';
                   popup.style.left = (rect.left + rect.width / 2) + 'px';
                 }
               }

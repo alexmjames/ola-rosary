@@ -974,10 +974,10 @@ body.dark-theme .bead-btn.filled {
 #global-meditation-popup::after {
   content: '';
   position: absolute;
-  bottom: -8px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
-  border-width: 8px 8px 0;
+  border-width: 15px 15px 0;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent;
   display: block;
