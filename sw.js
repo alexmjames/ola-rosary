@@ -3,6 +3,7 @@ const urlsToCache = [
   './',
   './index.html',
   './styles.css',
+  './meditations.js',
   './script.js',
   './manifest.json',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap'

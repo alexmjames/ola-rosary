@@ -156,12 +156,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // === 6.1 Show Meditations Logic ===
+  const toggleMeditations = document.getElementById('toggle-meditations');
+  let showMeditations = true;
+  if (toggleMeditations) {
+    const savedMeditationsState = localStorage.getItem('showMeditations');
+    showMeditations = savedMeditationsState === null ? true : savedMeditationsState === 'true';
+    toggleMeditations.checked = showMeditations;
+    
+    toggleMeditations.addEventListener('change', (e) => {
+      triggerHaptic(15);
+      showMeditations = e.target.checked;
+      localStorage.setItem('showMeditations', showMeditations);
+      
+      // Hide all popups if turned off
+      if (!showMeditations) {
+        document.querySelectorAll('.meditation-popup').forEach(p => {
+          p.classList.remove('visible');
+          p.textContent = '';
+        });
+      }
+    });
+  }
+
   const handleBeadClick = (bead) => {
     bead.classList.toggle('filled');
-    if (bead.classList.contains('filled')) {
+    const isFilled = bead.classList.contains('filled');
+    if (isFilled) {
       triggerHaptic(15);
     } else {
       triggerHaptic(5);
+    }
+    
+    if (showMeditations && typeof MEDITATIONS !== 'undefined') {
+      const type = bead.getAttribute('data-mystery-type');
+      const mysteryIdx = bead.getAttribute('data-mystery-index');
+      const beadIdx = bead.getAttribute('data-bead-index');
+      
+      if (type && mysteryIdx !== null && beadIdx !== null) {
+        // Find the closest popup within the same mystery-item
+        const container = bead.closest('.mystery-item');
+        if (container) {
+          const popup = container.querySelector('.meditation-popup');
+          if (popup) {
+            if (isFilled) {
+              const text = MEDITATIONS[type][mysteryIdx][beadIdx];
+              if (text) {
+                popup.textContent = text;
+                popup.classList.add('visible');
+              }
+            } else {
+              // Check if any beads in this container are still filled
+              const filledBeads = container.querySelectorAll('.bead-btn.filled');
+              if (filledBeads.length === 0) {
+                popup.classList.remove('visible');
+              } else {
+                // Find the most recently filled (highest index) bead
+                let lastFilledText = '';
+                container.querySelectorAll('.bead-btn').forEach(b => {
+                  if (b.classList.contains('filled')) {
+                    const bIdx = b.getAttribute('data-bead-index');
+                    lastFilledText = MEDITATIONS[type][mysteryIdx][bIdx];
+                  }
+                });
+                popup.textContent = lastFilledText;
+              }
+            }
+          }
+        }
+      }
     }
   };
 
@@ -185,24 +248,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Inject beads into mysteries
-  const mysteryItems = document.querySelectorAll('.mystery-item');
-  mysteryItems.forEach((item) => {
-    const container = document.createElement('div');
-    container.className = 'interactive-beads-container';
-    
-    const hmContainer = document.createElement('div');
-    hmContainer.className = 'hail-mary-beads';
-    
-    for (let i = 0; i < 10; i++) {
-      const hmBead = document.createElement('button');
-      hmBead.className = 'bead-btn hail-mary-bead';
-      hmBead.setAttribute('aria-label', `Hail Mary Bead ${i + 1}`);
-      hmBead.addEventListener('click', () => handleBeadClick(hmBead));
-      hmContainer.appendChild(hmBead);
-    }
-    
-    container.appendChild(hmContainer);
-    item.appendChild(container);
+  const mysterySectionsList = document.querySelectorAll('.mystery-section');
+  mysterySectionsList.forEach((section) => {
+    const sectionId = section.id || '';
+    let type = '';
+    if (sectionId.includes('joyful')) type = 'joyful';
+    else if (sectionId.includes('sorrowful')) type = 'sorrowful';
+    else if (sectionId.includes('glorious')) type = 'glorious';
+    else if (sectionId.includes('luminous')) type = 'luminous';
+
+    const items = section.querySelectorAll('.mystery-item');
+    items.forEach((item, mysteryIndex) => {
+      // Create meditation popup
+      const popup = document.createElement('div');
+      popup.className = 'meditation-popup glass-card';
+      item.insertBefore(popup, item.querySelector('p')); // Insert above the first paragraph
+
+      const container = document.createElement('div');
+      container.className = 'interactive-beads-container';
+      
+      const hmContainer = document.createElement('div');
+      hmContainer.className = 'hail-mary-beads';
+      
+      for (let i = 0; i < 10; i++) {
+        const hmBead = document.createElement('button');
+        hmBead.className = 'bead-btn hail-mary-bead';
+        hmBead.setAttribute('aria-label', `Hail Mary Bead ${i + 1}`);
+        if (type) {
+          hmBead.setAttribute('data-mystery-type', type);
+          hmBead.setAttribute('data-mystery-index', mysteryIndex);
+          hmBead.setAttribute('data-bead-index', i);
+        }
+        hmBead.addEventListener('click', () => handleBeadClick(hmBead));
+        hmContainer.appendChild(hmBead);
+      }
+      
+      container.appendChild(hmContainer);
+      item.appendChild(container);
+    });
   });
 
   // === 7. Mystery of the Day Logic ===

@@ -936,3 +936,36 @@ body.dark-theme .bead-btn.filled {
   background: radial-gradient(circle at 30% 30%, #fff 0%, var(--color-accent) 60%, rgba(255,255,255,0.4) 100%);
   box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(0,0,0,0.5);
 }
+
+/* Meditation Popup */
+.meditation-popup {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  font-family: var(--font-secondary);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  font-style: italic;
+  text-align: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  display: none;
+}
+.meditation-popup.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+body.dark-theme .meditation-popup {
+  background: rgba(15, 76, 129, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
