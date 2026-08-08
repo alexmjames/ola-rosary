@@ -962,9 +962,8 @@ body.dark-theme .bead-btn.filled {
   
   /* Robust CSS positioning above the relative parent */
   bottom: 100%;
-  left: 50%;
-  transform: translate(-50%, 0) scale(0.9);
   pointer-events: none;
+  transform-origin: bottom center;
   
   display: flex;
   flex-direction: column;
@@ -974,19 +973,65 @@ body.dark-theme .bead-btn.filled {
 }
 #global-meditation-popup.visible {
   opacity: 1;
-  transform: translate(-50%, 0) scale(1);
 }
+
+/* Base tail properties */
 #global-meditation-popup::after {
   content: '';
   position: absolute;
   top: 100%; /* Tail originates at the very bottom of the popup */
-  left: 50%;
-  transform: translateX(-50%);
   border-width: 15px 15px 0;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent;
   display: block;
   width: 0;
+}
+
+/* Align Center (Default) */
+#global-meditation-popup.align-center {
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, 0) scale(0.9);
+}
+#global-meditation-popup.align-center.visible {
+  transform: translate(-50%, 0) scale(1);
+}
+#global-meditation-popup.align-center::after {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+/* Align Left */
+#global-meditation-popup.align-left {
+  left: -10px;
+  right: auto;
+  transform: translate(0, 0) scale(0.9);
+  transform-origin: 27px bottom;
+}
+#global-meditation-popup.align-left.visible {
+  transform: translate(0, 0) scale(1);
+}
+#global-meditation-popup.align-left::after {
+  left: 27px; /* 10px offset + half of 34px bead */
+  right: auto;
+  transform: translateX(-50%);
+}
+
+/* Align Right */
+#global-meditation-popup.align-right {
+  right: -10px;
+  left: auto;
+  transform: translate(0, 0) scale(0.9);
+  transform-origin: calc(100% - 27px) bottom;
+}
+#global-meditation-popup.align-right.visible {
+  transform: translate(0, 0) scale(1);
+}
+#global-meditation-popup.align-right::after {
+  right: 27px;
+  left: auto;
+  transform: translateX(50%);
 }
 body.dark-theme #global-meditation-popup {
   background: rgba(15, 76, 129, 0.9);

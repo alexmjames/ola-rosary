@@ -201,6 +201,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const applyPopupAlignment = (popup, targetBead) => {
+    popup.classList.remove('align-center', 'align-left', 'align-right');
+    const rect = targetBead.getBoundingClientRect();
+    if (rect.left < 140) {
+      popup.classList.add('align-left');
+    } else if (window.innerWidth - rect.right < 140) {
+      popup.classList.add('align-right');
+    } else {
+      popup.classList.add('align-center');
+    }
+  };
+
   const handleBeadClick = (bead) => {
     bead.classList.toggle('filled');
     const isFilled = bead.classList.contains('filled');
@@ -225,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
               popup.textContent = text;
               popup.style.top = ''; // Clear old inline styles
               popup.style.left = ''; // Clear old inline styles
+              applyPopupAlignment(popup, bead);
               bead.appendChild(popup); // Move popup inside the bead
               
               // Use a tiny timeout to allow DOM update before adding visible class for transition
@@ -256,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (lastFilledBead) {
                   popup.style.top = '';
                   popup.style.left = '';
+                  applyPopupAlignment(popup, lastFilledBead);
                   lastFilledBead.appendChild(popup);
                 }
               }
