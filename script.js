@@ -202,15 +202,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const applyPopupAlignment = (popup, targetBead) => {
-    popup.classList.remove('align-center', 'align-left', 'align-right');
-    const rect = targetBead.getBoundingClientRect();
-    if (rect.left < 140) {
-      popup.classList.add('align-left');
-    } else if (window.innerWidth - rect.right < 140) {
-      popup.classList.add('align-right');
-    } else {
-      popup.classList.add('align-center');
-    }
+    // Reset shifts for calculation
+    popup.style.setProperty('--popup-shift', '0px');
+    popup.style.setProperty('--tail-shift', '0px');
+    
+    // We need to wait a frame for the popup to be appended and rendered to get its actual offsetWidth
+    requestAnimationFrame(() => {
+      const rect = targetBead.getBoundingClientRect();
+      const beadCenterX = rect.left + rect.width / 2;
+      const popupWidth = popup.offsetWidth || 280; // Fallback to 280px if not yet available
+      const margin = 15; // Minimum 15px from screen edge
+      
+      let idealLeft = beadCenterX - popupWidth / 2;
+      let shift = 0;
+      
+      if (idealLeft < margin) {
+        shift = margin - idealLeft; // Shift right to stay on screen
+      } else if (idealLeft + popupWidth > window.innerWidth - margin) {
+        shift = (window.innerWidth - margin) - (idealLeft + popupWidth); // Shift left to stay on screen
+      }
+      
+      popup.style.setProperty('--popup-shift', shift + 'px');
+      popup.style.setProperty('--tail-shift', -shift + 'px');
+    });
   };
 
   const handleBeadClick = (bead) => {
