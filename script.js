@@ -201,12 +201,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const text = MEDITATIONS[type][mysteryIdx][beadIdx];
             if (text) {
               popup.textContent = text;
-              popup.classList.add('visible');
+              popup.style.top = ''; // Clear old inline styles
+              popup.style.left = ''; // Clear old inline styles
+              bead.appendChild(popup); // Move popup inside the bead
               
-              // Position popup above the bead
-              const rect = bead.getBoundingClientRect();
-              popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 20) + 'px';
-              popup.style.left = (rect.left + rect.width / 2) + 'px';
+              // Use a tiny timeout to allow DOM update before adding visible class for transition
+              requestAnimationFrame(() => {
+                popup.classList.add('visible');
+              });
             }
           } else {
             // Find if any beads in this group are still filled
@@ -230,9 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Reposition to the new active bead
                 if (lastFilledBead) {
-                  const rect = lastFilledBead.getBoundingClientRect();
-                  popup.style.top = (rect.top + window.scrollY - popup.offsetHeight - 20) + 'px';
-                  popup.style.left = (rect.left + rect.width / 2) + 'px';
+                  popup.style.top = '';
+                  popup.style.left = '';
+                  lastFilledBead.appendChild(popup);
                 }
               }
             }
